@@ -10,11 +10,16 @@ class RawMilk(db.Model):
     previous_volume = db.Column(db.Numeric(5, 2), nullable=True)
     status = db.Column(db.String(20), nullable=False, default='fresh')
     created_at = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+
+    # Relationship with Cow
+    cow = db.relationship('Cow', back_populates='raw_milks')
 
     def to_dict(self):
         return {
             'id': self.id,
             'cow_id': self.cow_id,
+            'cow': self.cow.to_dict() if self.cow else None,  # Include cow details
             'production_time': self.production_time,
             'expiration_time': self.expiration_time,
             'volume_liters': self.volume_liters,

@@ -16,8 +16,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# Enable CORS for the app and specify allowed origins, methods, and headers
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"], "allow_headers": ["Content-Type", "Authorization"]}})
+# Configure CORS
+CORS(app, origins="*", allow_headers=["Content-Type", "Authorization"], methods=["GET", "POST", "PUT", "DELETE"])
 
 from app.models import Farmer, Cow, RawMilk, Supervisor, Admin
 from app.routes import farmers_bp, cows_bp, raw_milks_bp, supervisors_bp, admins_bp, auth_bp
@@ -25,6 +25,6 @@ from app.routes import farmers_bp, cows_bp, raw_milks_bp, supervisors_bp, admins
 app.register_blueprint(farmers_bp, url_prefix='/api')
 app.register_blueprint(cows_bp, url_prefix='/api')
 app.register_blueprint(raw_milks_bp, url_prefix='/api')
-app.register_blueprint(supervisors_bp, url_prefix='/api')
+app.register_blueprint(supervisors_bp, url_prefix='/api')   
 app.register_blueprint(admins_bp, url_prefix='/api')
 app.register_blueprint(auth_bp)

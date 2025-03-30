@@ -21,11 +21,17 @@ def create_raw_milk():
     if not data:
         return jsonify({'error': 'No input data provided'}), 400
 
+    # Convert previous_volume to float or default to 0.0
+    try:
+        previous_volume = float(data.get('previous_volume', 0.0))
+    except ValueError:
+        previous_volume = 0.0
+
     raw_milk = RawMilk(
         cow_id=data.get('cow_id'),
         production_time=data.get('production_time'),
         volume_liters=data.get('volume_liters'),
-        previous_volume=data.get('previous_volume'),
+        previous_volume=previous_volume,
         status=data.get('status', 'fresh')
     )
 
@@ -40,10 +46,16 @@ def update_raw_milk(id):
     if not data:
         return jsonify({'error': 'No input data provided'}), 400
 
+    # Convert previous_volume to float or retain the current value
+    try:
+        previous_volume = float(data.get('previous_volume', raw_milk.previous_volume))
+    except ValueError:
+        previous_volume = raw_milk.previous_volume
+
     raw_milk.cow_id = data.get('cow_id', raw_milk.cow_id)
     raw_milk.production_time = data.get('production_time', raw_milk.production_time)
     raw_milk.volume_liters = data.get('volume_liters', raw_milk.volume_liters)
-    raw_milk.previous_volume = data.get('previous_volume', raw_milk.previous_volume)
+    raw_milk.previous_volume = previous_volume
     raw_milk.status = data.get('status', raw_milk.status)
 
     db.session.commit()

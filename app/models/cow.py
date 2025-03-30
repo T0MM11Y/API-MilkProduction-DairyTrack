@@ -15,6 +15,11 @@ class Cow(db.Model):
     gender = db.Column(db.String(10))
     entry_date = db.Column(db.Date)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+    
+    # Relationship with RawMilk
+    raw_milks = db.relationship('RawMilk', back_populates='cow', cascade='all, delete-orphan')
+
 
     def to_dict(self):
         return {

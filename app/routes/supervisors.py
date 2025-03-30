@@ -27,7 +27,8 @@ def create_supervisor():
         email=data.get('email'),
         first_name=data.get('first_name'),
         last_name=data.get('last_name'),
-        contact=data.get('contact')
+        contact=data.get('contact'),
+        password=data.get('password')
     )
     # Hash the password using the set_password method
     new_supervisor.set_password(data.get('password'))

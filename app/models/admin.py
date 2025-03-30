@@ -12,6 +12,7 @@ class Admin(db.Model):
     role = db.Column(db.String(20), default='admin')
     password = db.Column(db.String(128), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+    updated_at = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
     def to_dict(self):
         return {

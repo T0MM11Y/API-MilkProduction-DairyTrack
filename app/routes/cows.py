@@ -32,6 +32,7 @@ def create_cow():
         reproductive_status=data.get('reproductive_status'),
         gender=data.get('gender'),
         entry_date=data.get('entry_date')
+        
     )
 
     db.session.add(cow)
